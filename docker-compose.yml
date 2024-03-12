@@ -1,0 +1,42 @@
+version: '3'
+
+services:
+  redis:
+    image: redis:6.2-alpine
+    restart: always
+    container_name: redis
+    ports:
+      - 6379:6379
+    networks:
+      - backend
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+  bot:
+    platform: linux/amd64
+    command: "python main.py"
+    build: .
+    container_name: teentalk
+    ports:
+      - 443:443
+    restart: always
+    env_file:
+      - .env
+    depends_on:
+      redis:
+        condition: service_healthy
+    networks:
+      - backend
+    volumes:
+      - .:/bot
+    deploy:
+      resources:
+        limits:
+          memory: 4g
+
+networks:
+  backend:
+    driver: bridge

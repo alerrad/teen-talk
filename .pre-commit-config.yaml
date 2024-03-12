@@ -1,0 +1,17 @@
+repos:
+  - repo: https://github.com/pycqa/flake8
+    rev: 6.1.0
+    hooks:
+      - id: flake8
+        types: [python]
+        args: [--ignore=E501]
+        exclude: ^src/blib2to3/|/__init__\.py$
+
+  - repo: local
+    hooks:
+      - id: isort
+        name: isort
+        entry: isort --settings-file ./.isort.cfg .
+        language: system
+        types: [python]
+        pass_filenames: false
