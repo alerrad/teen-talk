@@ -3,6 +3,7 @@ from aiogram.filters import Command, CommandStart
 from aiogram.types import Message
 
 from ..lexicon import LEXICON_RU
+from ..utils import rate_limited
 
 
 commands_router = Router()
@@ -14,5 +15,6 @@ async def start_command(message: Message):
 
 
 @commands_router.message(Command(commands='feedback'))
+@rate_limited()
 async def leave_feedback(message: Message):
     await message.answer(text=LEXICON_RU['/feedback'])
