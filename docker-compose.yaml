@@ -16,18 +16,16 @@ services:
       retries: 3
 
   bot:
-    platform: linux/amd64
-    command: "python main.py"
     build: .
+    command: "python main.py"
     container_name: teentalk
     ports:
       - 443:443
     restart: always
     env_file:
-      - .env
+      - ./.env
     depends_on:
-      redis:
-        condition: service_healthy
+      - redis
     networks:
       - backend
     volumes:

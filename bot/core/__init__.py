@@ -4,4 +4,4 @@ from .bot import bot, dp
 from .logger import logger
 from .database import feedback_collection
 
-redis_client = Redis()
+redis_client = Redis(host="redis", port=6379, db=0)
