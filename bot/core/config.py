@@ -9,7 +9,7 @@ class Config:
     MONGO_URI: str = get_key(".env", "MONGO_URI")
 
     BOT_COMMANDS = [
-        BotCommand(command="start", description="start the bot"),
-        BotCommand(command="feedback", description="leave a feedback about the bot"),
-        BotCommand(command="cancel", description="cancel current operation")
+        BotCommand(command="start", description="Старт"),
+        BotCommand(command="feedback", description="Написать отзыв"),
+        BotCommand(command="cancel", description="Отменить текущую операцию")
     ]
