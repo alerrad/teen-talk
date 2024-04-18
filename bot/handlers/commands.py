@@ -28,6 +28,15 @@ async def leave_feedback(message: Message, state: FSMContext):
     await message.reply(text=LEXICON_RU['feedback_entry'])
 
 
+@commands_router.message(Command('cancel'))
+async def cancel_command(message: Message, state: FSMContext):
+    if await state.get_state() is None:
+        await message.reply(LEXICON_RU['nothing_to_cancel'])
+    else:
+        await state.clear()
+        await message.reply(LEXICON_RU['cancel'])
+
+
 @commands_router.message(Feedback.feedback_text)
 async def finish_feedback(message: Message, state: FSMContext):
     try:
@@ -53,12 +62,3 @@ async def finish_feedback(message: Message, state: FSMContext):
 
     await message.reply(LEXICON_RU['finish_feedback'])
     await state.clear()
-
-
-@commands_router.message(Command('cancel'))
-async def cancel_command(message: Message, state: FSMContext):
-    if await state.get_state() is None:
-        await message.reply(LEXICON_RU['nothing_to_cancel'])
-    else:
-        await state.clear()
-        await message.reply(LEXICON_RU['cancel'])
