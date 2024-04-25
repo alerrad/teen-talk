@@ -5,7 +5,7 @@ from aiogram.fsm.context import FSMContext
 from aiogram.fsm.state import State, StatesGroup
 from aiogram.types import Message
 
-from ..core import Config
+from ..core import Config, question_collection
 from ..lexicon import LEXICON_RU, QNA
 from ..utils import rate_limited
 
@@ -57,6 +57,14 @@ async def handle_question(message: Message, state: FSMContext):
 
             if (max_weight := max(weights)) < 0.7:
                 await message.reply(LEXICON_RU['no_answer'])
+
+                if max_weight >= 0.4:
+                    await question_collection.insert_one({
+                        'question': message.text,
+                        'choosen_category': topic,
+                        'max_semantic_similarity_score': max_weight
+                    })
+
                 return
 
             match_question = QUESTIONS[weights.index(max_weight)]
