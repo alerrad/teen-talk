@@ -5,6 +5,7 @@ from aiogram.fsm.state import State, StatesGroup
 from aiogram.types import Message
 
 from ..core import feedback_collection, logger
+from ..keyboards import topics_keyboard
 from ..lexicon import LEXICON_RU
 from ..utils import rate_limited
 
@@ -18,10 +19,10 @@ class Feedback(StatesGroup):
 
 @commands_router.message(CommandStart())
 async def start_command(message: Message):
-    await message.answer(text=LEXICON_RU['/start'])
+    await message.answer(text=LEXICON_RU['start'], reply_markup=topics_keyboard)
 
 
-@commands_router.message(StateFilter(None), Command(commands='feedback'))
+@commands_router.message(StateFilter('*'), Command(commands='feedback'))
 @rate_limited()
 async def leave_feedback(message: Message, state: FSMContext):
     await state.set_state(Feedback.feedback_text)

@@ -13,3 +13,5 @@ class Config:
         BotCommand(command="feedback", description="Написать отзыв"),
         BotCommand(command="cancel", description="Отменить текущую операцию")
     ]
+
+    TOPICS = ["моё тело", "психология", "репродукция", "половое влечение"]
