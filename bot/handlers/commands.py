@@ -60,6 +60,7 @@ async def finish_feedback(message: Message, state: FSMContext):
     except Exception:
         await message.reply(LEXICON_RU['feedback_error'])
         logger.error("Could not insert/update feedback")
+        return
 
     await message.reply(LEXICON_RU['finish_feedback'])
     await state.clear()
